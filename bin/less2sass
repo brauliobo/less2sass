@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/less2sass'
+
+if ARGV.size < 1
+  puts 'Usage: less2sass inputfile [outputfile]'
+end
+
+input_file = ARGV[0]
+output_file = ARGV[1]
+
+src = File.read input_file
+sass = Less2Sass.convert src
+
+if output_file
+  File.open output_file, 'w' do |file|
+    file << sass
+  end
+else
+  puts sass
+end
+
