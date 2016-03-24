@@ -15,9 +15,9 @@ both examples result in ```styles.scss```
 
 ### Options
 
-| option          | parameter   |                                       |
-|---------------  |-----------  - |---------------------------- |
-| -o, --output    | FILE.scss   | name of outputfile        |
-| -d, --delete    |                     | delete inputfile after outputfile is created            |
-| -v, --version   |                     | print less2sass version   |
-| -h, --help      |                     | print help                      |
+| option          | parameter    |                              |
+|---------------  |------------  |----------------------------  |
+| -o, --output    | FILE.scss    | name of outputfile           |
+| -d, --delete    |              | delete inputfile after outputfile is created |
+| -v, --version   |              | print less2sass version      |
+| -h, --help      |              | print help                   |
