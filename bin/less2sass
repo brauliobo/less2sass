@@ -23,7 +23,8 @@ OptionParser.new do |opts|
 end.parse!
 
 if options[:version]
-  p "Version: #{Less2Sass::Version}"
+  puts "Version: #{Less2Sass::Version}"
+  puts " "
 end
 
 if ARGV.size < 1
@@ -44,9 +45,14 @@ else
     file << sass
   end
 
+  puts "Done: #{output_file}"
+
   if File.file?(output_file)
     if options[:delete]
+      puts "Deleting: #{input_file}"
       system "rm -rf #{input_file}"
     end
   end
+
+  puts "---------------------"
 end
