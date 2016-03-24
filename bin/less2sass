@@ -1,22 +1,50 @@
 #!/usr/bin/env ruby
-
+require 'optparse'
 require_relative '../lib/less2sass'
+require_relative '../lib/less2sass/version'
 
-if ARGV.size < 1
-  puts 'Usage: less2sass inputfile [outputfile]'
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: less2sass inputfile.less [options]"
+
+  opts.on("-o", "--output FILE", "name of outputfile") do |o|
+    options[:outputfile] = true
+    options[:outputfilename] = o
+  end
+
+  opts.on("-d", "--delete", "delete inputfile") do |d|
+    options[:delete] = d
+  end
+
+  opts.on("-v", "--version", "print less2sass version") do |v|
+    options[:version] = v
+  end
+end.parse!
+
+if options[:version]
+  p "Version: #{Less2Sass::Version}"
 end
 
-input_file = ARGV[0]
-output_file = ARGV[1]
+if ARGV.size < 1
+  system "less2sass -h"
+else
+  input_file = ARGV[0]
 
-src = File.read input_file
-sass = Less2Sass.convert src
+  src = File.read input_file
+  sass = Less2Sass.convert src
 
-if output_file
+  if options[:outputfile]
+    output_file = options[:outputfilename]
+  else
+    output_file = input_file.gsub("less", "scss")
+  end
+
   File.open output_file, 'w' do |file|
     file << sass
   end
-else
-  puts sass
-end
 
+  if options[:delete]
+    system "rm -rf #{input_file}"
+  end
+end
