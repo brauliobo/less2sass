@@ -8,12 +8,12 @@ options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: less2sass inputfile.less [options]"
 
-  opts.on("-o", "--output FILE", "name of outputfile") do |o|
+  opts.on("-o", "--output FILE.scss", "name of outputfile") do |o|
     options[:outputfile] = true
     options[:outputfilename] = o
   end
 
-  opts.on("-d", "--delete", "delete inputfile") do |d|
+  opts.on("-d", "--delete", "delete inputfile after outputfile is created") do |d|
     options[:delete] = d
   end
 
@@ -44,7 +44,9 @@ else
     file << sass
   end
 
-  if options[:delete]
-    system "rm -rf #{input_file}"
+  if File.file?(output_file)
+    if options[:delete]
+      system "rm -rf #{input_file}"
+    end
   end
 end
