@@ -1,7 +1,10 @@
 #!/usr/bin/env ruby
 require 'optparse'
+require 'rbconfig'
 require_relative '../lib/less2sass'
 require_relative '../lib/less2sass/version'
+
+@os = RbConfig::CONFIG['host_os']
 
 options = {}
 
@@ -57,7 +60,11 @@ else
 
     if File.file?(output_file)
       if options[:delete]
-        system "rm #{input_file}"
+        if @os.include?('mswin') || @os.include?('win') || @os.include?('mingw')
+          system "DEL #{input_file}"
+        else
+          system "rm #{input_file}"
+        end
 
         if File.file?(input_file) == false
           puts "Deleted: #{input_file}"
