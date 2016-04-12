@@ -5,7 +5,7 @@ require_relative '../lib/less2sass/version'
 
 options = {}
 
-OptionParser.new do |opts|
+option_parser = OptionParser.new do |opts|
   opts.banner = "Usage: less2sass inputfile.less [options]"
 
   opts.on("-o", "--output FILE.scss", "name of outputfile") do |o|
@@ -24,7 +24,9 @@ OptionParser.new do |opts|
   opts.on("-v", "--version", "print less2sass version") do |v|
     options[:version] = v
   end
-end.parse!
+end
+
+option_parser.parse!
 
 if options[:version]
   puts "Version: #{Less2Sass::Version}"
@@ -32,7 +34,7 @@ if options[:version]
 end
 
 if ARGV.size < 1
-  system "less2sass -h"
+  puts option_parser.help
 else
   input_file = ARGV[0]
 
@@ -42,7 +44,7 @@ else
 
     if options[:print]
       puts sass
-      exit
+      exit unless options[:delete] || options[:outputfile]
     end
 
     if options[:outputfile] && options[:outputfilename][-5, 5] == ".scss"
@@ -56,23 +58,22 @@ else
     end
 
     if File.file?(output_file)
+      puts "Done: #{output_file}"
+
       if options[:delete]
-          File.delete(input_file)
+        File.delete(input_file)
 
         if File.file?(input_file) == false
           puts "Deleted: #{input_file}"
         else
-          puts "Issue Deleting: #{input_file}"
+          puts "Unable to delete: #{input_file}"
         end
       end
     end
-
-    puts "Done: #{output_file}"
   else
     puts "Error: #{input_file} is not a valid .less file"
-    system "less2sass -h"
+    puts ""
+    puts option_parser.help
     exit
   end
-
-  puts "---------------------"
 end
