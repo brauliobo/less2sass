@@ -1,7 +1,6 @@
 
 class Less2Sass
 
-  # from http://stackoverflow.com/a/19167099/670229
   Replaces = {
     '@(?!font-face|import|media|keyframes|-)' => '$',
     '\.([\w\-]*)\s*\((.*)\)\s*\{' => "@mixin \\1\(\\2\)\n{",
