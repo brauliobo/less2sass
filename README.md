@@ -1,4 +1,6 @@
-# less2sass
+# less2sass 
+[![Gem Version](https://badge.fury.io/rb/less2sass@2x.png)](https://badge.fury.io/rb/less2sass)
+
 Convert Less file to a Sass file
 
 ### Installation
@@ -19,5 +21,6 @@ both examples result in ```styles.scss```
 |---------------  |------------  |----------------------------  |
 | -o, --output    | FILE.scss    | name of outputfile           |
 | -d, --delete    |              | delete inputfile after outputfile is created |
+| -p, --print     |              | output sass results to the terminal |
 | -v, --version   |              | print less2sass version      |
 | -h, --help      |              | print help                   |

@@ -17,6 +17,10 @@ OptionParser.new do |opts|
     options[:delete] = d
   end
 
+  opts.on("-p", "--print", "output sass results to the terminal") do |p|
+    options[:print] = p
+  end
+
   opts.on("-v", "--version", "print less2sass version") do |v|
     options[:version] = v
   end
@@ -32,26 +36,42 @@ if ARGV.size < 1
 else
   input_file = ARGV[0]
 
-  src = File.read input_file
-  sass = Less2Sass.convert src
+  if input_file[-5, 5] == ".less"
+    src = File.read input_file
+    sass = Less2Sass.convert src
 
-  if options[:outputfile]
-    output_file = options[:outputfilename]
-  else
-    output_file = input_file.gsub("less", "scss")
-  end
-
-  File.open output_file, 'w' do |file|
-    file << sass
-  end
-
-  puts "Done: #{output_file}"
-
-  if File.file?(output_file)
-    if options[:delete]
-      puts "Deleting: #{input_file}"
-      system "rm -rf #{input_file}"
+    if options[:print]
+      puts sass
+      exit
     end
+
+    if options[:outputfile] && options[:outputfilename][-5, 5] == ".scss"
+      output_file = options[:outputfilename]
+    else
+      output_file = input_file.gsub(".less", ".scss")
+    end
+
+    File.open output_file, 'w' do |file|
+      file << sass
+    end
+
+    if File.file?(output_file)
+      if options[:delete]
+          File.delete(input_file)
+
+        if File.file?(input_file) == false
+          puts "Deleted: #{input_file}"
+        else
+          puts "Issue Deleting: #{input_file}"
+        end
+      end
+    end
+
+    puts "Done: #{output_file}"
+  else
+    puts "Error: #{input_file} is not a valid .less file"
+    system "less2sass -h"
+    exit
   end
 
   puts "---------------------"
