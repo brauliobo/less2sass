@@ -28,3 +28,7 @@ both examples will output to & overwrite `styles.scss`
 | -p, --print     |              | output sass results to the terminal |
 | -v, --version   |              | print less2sass version      |
 | -h, --help      |              | print help                   |
+
+### Docker Image
+
+[This docker image](https://hub.docker.com/r/cthiebault/less2sass/) was created by [cthiebault](https://github.com/cthiebault) so that installation of Ruby on your base OS isn't required.
