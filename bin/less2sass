@@ -8,7 +8,7 @@ options = {}
 option_parser = OptionParser.new do |opts|
   opts.banner = "Usage: less2sass inputfile.less [options]"
 
-  opts.on("-o", "--output FILE.scss", "name of outputfile") do |o|
+  opts.on("-o", "--output FILE.scss", "name of outputfile (single file only)") do |o|
     options[:outputfile] = true
     options[:outputfilename] = o
   end
@@ -48,7 +48,7 @@ else
         exit unless options[:delete] || options[:outputfile]
       end
 
-      if options[:outputfile] && options[:outputfilename][-5, 5] == ".scss"
+      if options[:outputfile] && options[:outputfilename][-5, 5] == ".scss" && ARGV.size == 1
         output_file = options[:outputfilename]
       else
         output_file = input_file.gsub(".less", ".scss")

@@ -23,7 +23,7 @@ both examples will output to & overwrite `styles.scss`
 
 | option          | parameter    |                              |
 |---------------  |------------  |----------------------------  |
-| -o, --output    | FILE.scss    | name of outputfile           |
+| -o, --output    | FILE.scss    | name of outputfile (Single file only)           |
 | -d, --delete    |              | delete inputfile after outputfile is created |
 | -p, --print     |              | output sass results to the terminal |
 | -v, --version   |              | print less2sass version      |
