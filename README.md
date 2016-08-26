@@ -9,7 +9,15 @@ Sorry if the name causes any confusion but this gem doesn't currently output Sas
     % gem install less2sass
 
 ### Usage
+#### Single file conversion
+
     % less2sass inputfile.less [options]
+
+#### Multiple file conversion
+
+    % less2sass *.less [options]
+    
+    % less2sass inputfile1.less inputfile2.less [options]
 
 ### Example
 less2sass will output to inputfile.scss unless an alternative is given.
@@ -23,7 +31,7 @@ both examples will output to & overwrite `styles.scss`
 
 | option          | parameter    |                              |
 |---------------  |------------  |----------------------------  |
-| -o, --output    | FILE.scss    | name of outputfile           |
+| -o, --output    | FILE.scss    | name of outputfile (Single file only)           |
 | -d, --delete    |              | delete inputfile after outputfile is created |
 | -p, --print     |              | output sass results to the terminal |
 | -v, --version   |              | print less2sass version      |

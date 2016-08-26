@@ -8,7 +8,7 @@ options = {}
 option_parser = OptionParser.new do |opts|
   opts.banner = "Usage: less2sass inputfile.less [options]"
 
-  opts.on("-o", "--output FILE.scss", "name of outputfile") do |o|
+  opts.on("-o", "--output FILE.scss", "name of outputfile (single file only)") do |o|
     options[:outputfile] = true
     options[:outputfilename] = o
   end
@@ -37,43 +37,47 @@ if ARGV.size < 1
   puts option_parser.help
 else
   input_file = ARGV[0]
+  ARGV.each do |input_file|
 
-  if input_file[-5, 5] == ".less"
-    src = File.read input_file
-    sass = Less2Sass.convert src
+    if input_file[-5, 5] == ".less"
+      src = File.read input_file
+      sass = Less2Sass.convert src
 
-    if options[:print]
-      puts sass
-      exit unless options[:delete] || options[:outputfile]
-    end
+      if options[:print]
+        puts sass
+        exit unless options[:delete] || options[:outputfile]
+      end
 
-    if options[:outputfile] && options[:outputfilename][-5, 5] == ".scss"
-      output_file = options[:outputfilename]
-    else
-      output_file = input_file.gsub(".less", ".scss")
-    end
+      if options[:outputfile] && options[:outputfilename][-5, 5] == ".scss" && ARGV.size == 1
+        output_file = options[:outputfilename]
+      else
+        output_file = input_file.gsub(".less", ".scss")
+      end
 
-    File.open output_file, 'w' do |file|
-      file << sass
-    end
+      File.open output_file, 'w' do |file|
+        file << sass
+      end
 
-    if File.file?(output_file)
-      puts "Done: #{output_file}"
+      if File.file?(output_file)
+        puts "Done: #{output_file}"
 
-      if options[:delete]
-        File.delete(input_file)
+        if options[:delete]
+          File.delete(input_file)
 
-        if File.file?(input_file) == false
-          puts "Deleted: #{input_file}"
-        else
-          puts "Unable to delete: #{input_file}"
+          if File.file?(input_file) == false
+            puts "Deleted: #{input_file}"
+          else
+            puts "Unable to delete: #{input_file}"
+          end
         end
       end
+    else
+      puts "Error: #{input_file} is not a valid .less file"
+      if ARGV.size == 1
+        puts ""
+        puts option_parser.help
+        exit
+      end
     end
-  else
-    puts "Error: #{input_file} is not a valid .less file"
-    puts ""
-    puts option_parser.help
-    exit
   end
 end
