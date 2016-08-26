@@ -9,7 +9,13 @@ Sorry if the name causes any confusion but this gem doesn't currently output Sas
     % gem install less2sass
 
 ### Usage
+#### Single file conversion
+
     % less2sass inputfile.less [options]
+
+#### Multiple file conversion
+
+    % less2sass *.scss
 
 ### Example
 less2sass will output to inputfile.scss unless an alternative is given.
