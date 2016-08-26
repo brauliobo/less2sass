@@ -15,7 +15,7 @@ Sorry if the name causes any confusion but this gem doesn't currently output Sas
 
 #### Multiple file conversion
 
-    % less2sass *.scss
+    % less2sass *.less
 
 ### Example
 less2sass will output to inputfile.scss unless an alternative is given.
