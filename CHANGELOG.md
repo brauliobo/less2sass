@@ -1,3 +1,7 @@
+## 1.2.0
+
+[Multiple file conversion](https://github.com/brauliobo/less2sass#multiple-file-conversion) ([nicklayb](https://github.com/nicklayb))
+
 ## 1.1.0
 
 Command-line options ([arubinofaux](https://github.com/arubinofaux))

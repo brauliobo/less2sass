@@ -6,7 +6,8 @@ require_relative '../lib/less2sass/version'
 options = {}
 
 option_parser = OptionParser.new do |opts|
-  opts.banner = "Usage: less2sass inputfile.less [options]"
+  opts.banner = "Usage: less2sass inputfile.less [additional input files] [options]"
+  opts.banner += "\nSorry for the confusing name, but this actually converts less to scss\n\n"
 
   opts.on("-o", "--output FILE.scss", "name of outputfile (single file only)") do |o|
     options[:outputfile] = true
@@ -44,8 +45,9 @@ else
       sass = Less2Sass.convert src
 
       if options[:print]
+        puts "#{input_file}:" if ARGV.size > 1
         puts sass
-        exit unless options[:delete] || options[:outputfile]
+        next unless options[:delete] || options[:outputfile]
       end
 
       if options[:outputfile] && options[:outputfilename][-5, 5] == ".scss" && ARGV.size == 1
