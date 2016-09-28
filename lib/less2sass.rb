@@ -2,7 +2,8 @@
 class Less2Sass
 
   Replaces = {
-    '@(?!font-face|import|media|keyframes|-)' => '$',
+    '@{' => '#{$',
+    '@(?!font-face|import|media|keyframes|-|{)' => '$',
     '\.([\w\-]*)\s*\((.*)\)\s*\{' => "@mixin \\1\(\\2\)\n{",
     '\.([\w\-]*\(.*\)\s*;)' => '@include \1',
     '~"(.*)"' => '#{"\1"}',
